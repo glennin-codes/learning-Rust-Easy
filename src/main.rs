@@ -14,7 +14,7 @@
 // // foo.0=900;
 // //   println!("my tuple is {:?}",foo);
 
-use std::fmt::format;
+
 
 // // }
 // //structs
