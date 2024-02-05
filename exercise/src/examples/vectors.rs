@@ -4,4 +4,4 @@ fn main(){
 vec.push(6);
 
 println!("our array is {:?}",vec);
-}
+}       

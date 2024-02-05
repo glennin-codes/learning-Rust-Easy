@@ -34,6 +34,22 @@
 //     println!("success,{:?}",home_page)
 // }
 
+
+
+//Implement struct
+#[derive(Debug)]
+// struct Point <T>{
+//     x:T,
+//     y:T
+// }
+// fn main (){
+//     let integer:Point<u32>=Point {x:15,y:9};
+//     let float:Point<f32> = Point {x:1.2,y:4.4};
+//     println!("point in integer{:?}",integer);
+//     println!("point in float{:?}",float);
+//     println!("point X is {} on the x-axis and {} on the y-axis ",float.x,float.y);
+//     println!("success")
+// }
 //association
 // struct Rectangle {
 //     width:u32,
@@ -67,17 +83,27 @@
 //     println!("sucess!");
 // }
 
-//Implement struct
-#[derive(Debug)]
+// struct Point<T,U>{
+//     y:U,
+//     x:T
+// }
+// fn main()->(){
+//     let point_p:Point<f32,u32>=Point { y: 8, x: 8.99 };
+//     print!("point P is {:?}",point_p)
+// }
 struct Point <T>{
-    x:T,
-    y:T
+    val_a:T
+}
+
+impl  Point{
+    fn value(&self ){
+        self.val_a
+    }
+
 }
 fn main (){
-    let integer:Point<u32>=Point {x:15,y:9};
-    let float:Point<f32> = Point {x:1.2,y:4.4};
-    println!("point in integer{:?}",integer);
-    println!("point in float{:?}",float);
-    println!("point X is {} on the x-axis and {} on the y-axis ",float.x,float.y);
-    println!("success")
+    let x=Val{val_a:3.0};
+    let y=Val{val_a:"hello".to_string()};
+    println!("{},{}",x.value(),y.value());
+
 }
