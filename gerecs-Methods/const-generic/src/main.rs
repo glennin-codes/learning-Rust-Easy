@@ -3,8 +3,17 @@ use uuid::Uuid;
 
 
 #[derive(Debug)]
-struct Grades<T, const N: usize> {
-    mathematics: [T; N],
+ #[allow(dead_code)]
+enum Subject {
+    Mathematics,
+    English,
+    Physics,
+    Geography,
+    Chemistry
+}
+#[derive(Debug)]
+struct Grades <T, const N: usize> {
+   mathematics: [T; N],
     english: [T; N],
     physics: [T; N],
     geography: [T; N],
@@ -35,24 +44,24 @@ impl Students {
     }
     //update a student's grade for a specific subjects
     #[allow(dead_code)]
-    pub fn update_grades(&mut self, subject_name: String, grade_index: usize, grade: i32) -> () {
-        match subject_name.as_str() {
-            "mathematics" => {
+    pub fn update_grades(&mut self, subject_name: Subject, grade_index: usize, grade: i32) -> () {
+        match subject_name {
+            Subject::Mathematics => {
                 self.grades.mathematics[grade_index] = grade;
             }
-            "english" => {
+            Subject::English => {
                 self.grades.english[grade_index] = grade;
             }
-            "physics" => {
+            Subject::Physics => {
                 self.grades.physics[grade_index] = grade;
             }
-            "geography" => {
+            Subject::Geography => {
                 self.grades.geography[grade_index] = grade;
             }
-            "chemistry" => {
+            Subject::Chemistry => {
                 self.grades.chemistry[grade_index] = grade;
             }
-            _ => print!("no subejct found"),
+            
         }
     }
 }
@@ -60,58 +69,56 @@ impl Students {
 
 fn calculate_average_subject_grade(
     all_students: &Vec<Students>,
-    subject_name: &str
-) -> std::result::Result<f32, String>{
+    subject_name: &Subject
+) -> std::result::Result<(f32, i32), String>{
     let mut total_marks: i32 = 0;
     let mut count: i32 = 0;
     for students in all_students {
         match subject_name {
-            "mathematics" => {
+          Subject::Mathematics => {
                 for grade in students.grades.mathematics {
                     total_marks += grade;
                     count += 1;
                 }
             }
-            "english" => {
+           Subject::English=> {
                 for grade in students.grades.english {
                     total_marks += grade;
                     count += 1;
                 }
             }
-            "physics" => {
+            Subject::Physics=> {
                 for grade in students.grades.physics {
                     total_marks += grade;
                     count += 1;
                 }
             }
 
-            "chemistry" => {
+            Subject::Chemistry => {
                 for grade in students.grades.chemistry {
                     total_marks += grade;
                     count += 1;
                 }
             }
-            "geography" => {
+            Subject::Geography => {
                 for grade in students.grades.geography {
                     total_marks += grade;
                     count += 1;
                 }
             }
-            _ => {
-                continue;
-            }
+           
         }
     }
     if count > 0 {
-        Ok((total_marks as f32) / (count as f32))
+        Ok(((total_marks as f32) / (count as f32),count))
     } else {
-        Err(format!("no subject found or no grades for this subject {}", subject_name))
+        Err(format!("no subject found or no grades for this subject {:?}", subject_name))
     }
 }
-fn _update_user(
+fn update_user(
     all_students: &mut Vec<Students>,
     id: u8,
-    subject_name: String,
+    subject_name: Subject,
     grade_index: usize,
     grade: i32
 ) {
@@ -169,13 +176,14 @@ fn main() {
     all_students.extend(Students::new_students("James Williams".to_string(), grades_student_c, 9));
     all_students.extend(Students::new_students("Mike Tyson".to_string(), grades_student_d, 10));
 
-    // update_user(&mut all_students, 7, "mathematics".to_string(), 1, 90);
+    update_user(&mut all_students, 7, Subject::Chemistry, 1, 90);
 
-    // println!("this is the student data of {} students:{:?}", all_students.len(), all_students);
-    let subject = "mathematics";
+    println!("this is the student data of {} students:{:?}", all_students.len(), all_students);
+   
+   let subject:&Subject=&Subject::Chemistry;
 
     match calculate_average_subject_grade(&all_students, subject) {
-        Ok(average) => println!("the average of {} is {:?} ", subject, average),
+        Ok((average,count)) => println!("the average of {:?} is {:?}   and there are {} students in this class. and total number of exams done by the students for that subject is {}", subject, average, all_students.len(),count),
         Err(message) => println!("{}",message),
     }
 }
