@@ -1,3 +1,6 @@
+
+pub mod traits;
+
 // `Centimeters`, a tuple struct that can be compared
 #[derive(PartialEq, PartialOrd)]
 struct Centimeters(f64);
@@ -18,7 +21,7 @@ struct Seconds(i32);
 
 fn main() {
     let _one_second = Seconds(1);
-
+    
     // Error: `Seconds` can't be printed; it doesn't implement the `Debug` trait
     //println!("One second looks like: {:?}", _one_second);
     // TODO ^ Try uncommenting this line
