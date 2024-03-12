@@ -31,14 +31,14 @@ let unwrapped_err = err_result.unwrap(); // This will panic
 
 ```
 
-   #Strings
-###A string has a pointer ,a length and a capacity
-####capacity is the amount of memory allocated to the string
-####length is the amount of memory currently used by the string
-####the length should be less than or equal to the capacity
-####if the length is greater than the capacity the string will be reallocated
-####this is done by doubling the capacity of the string
-####realocation is so expensive so its better to use the with_capacity method to allocate the memory in advance
+   # Strings
+### A string has a pointer ,a length and a capacity
+#### capacity is the amount of memory allocated to the string
+#### length is the amount of memory currently used by the string
+#### the length should be less than or equal to the capacity
+#### if the length is greater than the capacity the string will be    reallocated
+#### this is done by doubling the capacity of the string
+#### realocation is so expensive so its better to use the with_capacity method to allocate the memory in advance
 
 ```rust
 fn main(){
