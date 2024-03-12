@@ -18,6 +18,11 @@
 // }
 
 
+
+
+
+mod test;
+
 trait Bird {
     fn quack(&self) -> String;
 }
@@ -52,12 +57,12 @@ fn main() {
     let duck:Duck = Duck;
     duck.swim();
 
-    let bird:Box<dyn Bird>= hatch_a_bird(2);
-    // This bird has forgotten how to swim, so below line will cause an error.
-    // bird.swim();
-    // But it can quak.
+    let bird: Box<dyn Bird> = hatch_a_bird(2);
     assert_eq!(bird.quack(), "duck duck");
-  
+    
+    // Use bird.quack() in println! macro
+    println!("{}", bird.quack());
+
     let bird:Box<dyn Bird>= hatch_a_bird(0);
     // This bird has forgotten how to fly, so below line will cause an error.
     // bird.fly();
@@ -65,6 +70,7 @@ fn main() {
     assert_eq!(bird.quack(), "swan swan");
 
     println!("Success!");
+    
 }   
 
 // IMPLEMENT this function.
