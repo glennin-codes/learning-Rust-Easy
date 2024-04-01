@@ -80,7 +80,20 @@ fn main(){
   let s:String="i love my girl".into()
 }
 
-
 ```
+## using try_from and try_into
+- similar to form and into .
+- unlike them ,are used for fallible conversion and return Result instead of plain values.
+```rust
+   fn main(){
+    let n_i16=256;
+    let n:u8=match n.try_into(){
+      Ok(n)->n,
+      Err(e)->println!("the was an error while converting,{:?}",e.to_string())
+    }
+
+   }
+```
+
 
 **Note:** This document is intended to serve as a basic introduction to the topic. For more in-depth information, please refer to the [Rust documentation](https://doc.rust-lang.org/book/ch03-02-data-types.html#type-casting).
