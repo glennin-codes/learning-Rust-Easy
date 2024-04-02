@@ -9,27 +9,6 @@
 //     // Call the closure
 //     print_x();
 // }
-// One input reference with lifetime `'a` which must live
-// at least as long as the function.
-fn print_one<'a>(x: &'a i32) {
-    println!("`print_one`: x is {}", x);
-}
-
-// Mutable references are possible with lifetimes as well.
-fn add_one<'a>(x: &'a mut i32) {
-    *x += 1;
-}
-
-// Multiple elements with different lifetimes. In this case, it
-// would be fine for both to have the same lifetime `'a`, but
-// in more complex cases, different lifetimes may be required.
-fn print_multi<'a, 'b>(x: &'a i32, y: &'b i32) {
-    println!("`print_multi`: x is {}, y is {}", x, y);
-}
-
-// Returning references that have been passed in is acceptable.
-// However, the correct lifetime must be returned.
-fn pass_x<'a, 'b>(x: &'a i32, _: &'b i32) -> &'a i32 { x }
 
 //fn invalid_output<'a>() -> &'a String { &String::from("foo") }
 // The above is invalid: `'a` must live longer than the function.
@@ -37,17 +16,46 @@ fn pass_x<'a, 'b>(x: &'a i32, _: &'b i32) -> &'a i32 { x }
 // reference. Then the data is dropped upon exiting the scope, leaving
 // a reference to invalid data to be returned.
 
-fn main() {
-    let x = 7;
-    let y = 9;
+// fn main() {
+//     let x = 7;
+//     let y = 9;
     
-    print_one(&x);
-    print_multi(&x, &y);
+//     print_one(&x);
+//     print_multi(&x, &y);
     
-    let z = pass_x(&x, &y);
-    print_one(z);
+//     let z = pass_x(&x, &y);
+//     print_one(z);
 
-    let mut t = 3;
-    add_one(&mut t);
-    print_one(&t);
-}
+//     let mut t = 3;
+//     add_one(&mut t);
+//     print_one(&t);
+// }fn outer_function(outer_variable: &str) -> impl Fn(&str) {
+    fn outer_function <'a> (outer_variable: &'a str) -> impl Fn(&'a str) {
+        move |inner_variable: &str| {
+            // Inner function logic using outer_variable and inner_variable
+            println!("Outer variable: {}", outer_variable);
+            println!("Inner variable: {}", inner_variable);
+        }
+    }
+    fn outer_function_b(outer_variable: i32) -> impl Fn(i32) -> i32 {
+        let closure = move |inner_variable: i32| {
+            outer_variable + inner_variable
+        };
+        closure
+    }
+    
+    fn main() {
+        // Create a closure by calling the outer function and assigning it to a variable
+        let closure = outer_function("outerValue");
+     let outer_var = 10;
+        let closure = outer_function_b(outer_var);
+        let result = closure(5);
+        println!("Result: {}", result);
+        // Access the inner function and use it
+        // closure("innerValue");
+        add_one(&mut 8)
+    }
+    fn add_one<'a>(x: &'a mut i32)->() {//life time of x is same as the life time of the reference passed to it 
+        *x += 1;
+        println!("{}",x);
+    }
