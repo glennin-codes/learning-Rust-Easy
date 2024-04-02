@@ -43,7 +43,7 @@
         };
         closure
     }
-    
+    use std::ptr; 
     fn main() {
         // Create a closure by calling the outer function and assigning it to a variable
         let closure = outer_function("outerValue");
@@ -53,9 +53,39 @@
         println!("Result: {}", result);
         // Access the inner function and use it
         // closure("innerValue");
-        add_one(&mut 8)
+        add_one(&mut 8);
+        let x = Box::new(5);
+    
+        let mut  y = *x;
+        
+        y = 4;
+        
+        assert_eq!(*x, 5);
+        assert_eq!(y, 4);
+    
+        println!("Success!");
+        referencing();
     }
     fn add_one<'a>(x: &'a mut i32)->() {//life time of x is same as the life time of the reference passed to it 
         *x += 1;
         println!("{}",x);
     }
+
+fn referencing() {
+    let c: char = '中';
+
+    let r1: &char = &c;
+    let ref  r2 = c;
+
+    assert_eq!(*r1, *r2);
+
+    // Check the equality of the two address strings
+    assert_eq!(get_addr(r1), get_addr(r2));
+
+    println!("Success!");
+}
+
+// Get memory address string
+fn get_addr(r: &char) -> String {
+    format!("{:p}",ptr::addr_of!(r))
+}

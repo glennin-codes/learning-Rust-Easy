@@ -34,6 +34,9 @@ fn outer_function_b(outer_variable: i32) -> impl Fn(i32) -> i32 {
 }
 
 fn main() {
+  
+   
+
     // Create a closure by calling the outer function and assigning it to a variable
     let closure = outer_function("outerValue");
  let outer_var = 10;
