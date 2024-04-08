@@ -65,6 +65,7 @@
     
         println!("Success!");
         referencing();
+        practice();
     }
     fn add_one<'a>(x: &'a mut i32)->() {//life time of x is same as the life time of the reference passed to it 
         *x += 1;
@@ -83,9 +84,33 @@ fn referencing() {
     assert_eq!(get_addr(r1), get_addr(r2));
 
     println!("Success!");
+    
 }
 
 // Get memory address string
 fn get_addr(r: &char) -> String {
     format!("{:p}",ptr::addr_of!(r))
+}
+/* Make it work 
+- Dont use `_reborrow` and `_count_reborrowed`
+- Dont modify `assert_eq`
+*/
+fn practice() {
+    let mut count = 0;
+
+    let mut inc = move  || {
+        count += 1;
+        println!("`count`: {}", count);
+    };
+    inc();
+    let _reborrow = &count;
+
+    inc();
+   
+    // The closure no longer needs to borrow `&mut count`. Therefore, it is
+    // possible to reborrow without an error
+    let _count_reborrowed = &mut count; 
+  
+    assert_eq!(count, 0);
+   
 }
