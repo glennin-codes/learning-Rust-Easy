@@ -1,5 +1,6 @@
+#[allow(non_snake_case)]
+use std::{ fs, io, num};
 
-use std::{ fs, i32, io, num};
 
 #[derive(Debug)]
 enum CliError{
