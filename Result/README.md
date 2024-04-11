@@ -37,3 +37,26 @@ fn multipy(a_str:&str,b_str:&str)-> Result<i32,ParseIntError>{
     }
 ```
 The `?` operator is used to propagate the error up the call stack. If the parse method returns an Ok variant, the `? `operator simply returns the value inside the` Ok (in this caswe T)`. However, if the operation returns an Err variant, the `? `operator returns from the current function with that error value.
+## unwrap()  
+- unwrap method  extract the value from the ok variant in the Result enum but an error ocurs it panics .in any operations, you have to be confidence enough that the operation will succed.
+
+```rust
+// FILL in the blanks and FIX the errors
+use std::num::ParseIntError;
+
+fn multiply(n1_str: &str, n2_str: &str) -> Result<i32,ParseIntError> {
+    let n1 = n1_str.parse::<i32>();
+    let n2 = n2_str.parse::<i32>();
+    Ok(n1.unwrap() * n2.unwrap())
+}
+
+fn main() {
+    let result = multiply("10", "2");
+    assert_eq!(result, Ok(20);
+
+    let result = multiply("4", "2");
+    assert_eq!(result.unwrap(), 8);
+
+    println!("Success!");
+}
+```
