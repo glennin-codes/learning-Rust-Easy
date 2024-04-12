@@ -29,6 +29,18 @@ fn print(result: Result<i32, ParseIntError>) {
         Err(e) => println!("Error: {}", e),
     }
 }
+fn get_value(x: i32) -> Result<i32, &'static str> {
+    if x > 5 {
+        Ok(x)
+    } else {
+        Err("Value is too small")
+    }
+}
+
+fn multiply(x: i32) -> Result<i32, &'static str> {
+    Ok(x * 2)
+}
+
 
 fn main() {
     // This still presents a reasonable answer.
@@ -40,4 +52,11 @@ fn main() {
     print(tt);
 
     println!("Success!");
+    let x: Result<i32, &str> = Ok(8);
+let y: Result<i32, &str> = x.and_then(|v|get_value(v)).and_then(|v|multiply(v)); // y is Ok(16)
+
+let x: Result<i32, &str> = Ok(3);
+let y: Result<i32, &str> = x.and_then(|v|get_value(v)).and_then(|v|multiply(v)); // y 
+
+    
 }
