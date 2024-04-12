@@ -1,4 +1,4 @@
-use std::num::ParseIntError;
+// use std::num::ParseIntError;
 // fn divide(x:f32,y:f32)->Result<f32,& 'static str>{
 // if x==0.0{
 //     return Err("Division By zero");
@@ -22,18 +22,58 @@ use std::num::ParseIntError;
 //     }
 // FILL in the blanks and FIX the errors
 //using unwrap()
-fn multiply(n1_str: &str, n2_str: &str) -> Result<i32,ParseIntError> {
-    let n1 = n1_str.parse::<i32>();
-    let n2 = n2_str.parse::<i32>();
-    Ok(n1.unwrap() * n2.unwrap())
+// fn multiply(n1_str: &str, n2_str: &str) -> Result<i32,ParseIntError> {
+//     let n1 = n1_str.parse::<i32>();
+//     let n2 = n2_str.parse::<i32>();
+//     Ok(n1.unwrap() * n2.unwrap())
+// }
+
+// fn main() {
+//     let result = multiply("10", "2");
+//     assert_eq!(result, Ok(20));
+
+//     let result = multiply("4", "2");
+//     assert_eq!(result.unwrap(), 8);
+
+//     println!("Success!");
+// }
+
+use std::fs::File;
+use std::io::{self, Read};
+
+fn read_file1() -> Result<String, io::Error> {
+    let f = File::open("README.md");
+    let mut f:File = match f {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+println!("{:?}",f);
+    let mut s = String::new();
+    match f.read_to_string(&mut s) {
+        Ok(b) =>{
+            println!("number of bytes read is {}",b);
+            Ok(s)
+        },
+        Err(e) =>  Err(e),
+    }
+    
+}
+
+// FILL in the blanks with one code line
+// DON'T change any code lines
+fn read_file2() -> Result<String, io::Error> {
+    let mut s = String::new();
+
+File::open("README.md")?.read_to_string(&mut s)?;
+
+    Ok(s)
 }
 
 fn main() {
-    let result = multiply("10", "2");
-    assert_eq!(result, Ok(20));
-
-    let result = multiply("4", "2");
-    assert_eq!(result.unwrap(), 8);
-
+    // assert_eq!(read_file1().unwrap_err().to_string(), read_file2().unwrap_err().to_string());
     println!("Success!");
+   match read_file1(){
+    Ok(s)=>println!("string {}",s),
+    Err(e)=>println!("error {}",e)
+   }
 }
