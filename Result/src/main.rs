@@ -77,7 +77,7 @@
 //     Err(e)=>println!("error {}",e)
 //    }
 // }
-use std::num::ParseIntError;
+// use std::num::ParseIntError;
 
 // With the return type rewritten, we use pattern matching without `unwrap()`.
 // But it's so Verbose...
@@ -108,38 +108,65 @@ use std::num::ParseIntError;
 //         Err(e) => println!("Error: {}", e),
 //     }
 // }
-fn get_value(x: i32) -> Result<i32, &'static str> {
-    if x > 5 {
-        Ok(x)
-    } else {
-        Err("Value is too small")
-    }
+// fn get_value(x: i32) -> Result<i32, &'static str> {
+//     if x > 5 {
+//         Ok(x)
+//     } else {
+//         Err("Value is too small")
+//     }
+// }
+
+// fn multiply(x: i32) -> Result<i32, &'static str> {
+//     Ok(x * 2)
+// }
+
+
+// fn main() {
+//     // // This still presents a reasonable answer.
+//     // let twenty = multiply1("10", "2");
+//     // print(twenty);
+
+//     // // The following now provides a much more helpful error message.
+//     // let tt = multiply("t", "2");
+//     // print(tt);
+
+//     // println!("Success!");
+//     let x: Result<i32, &str> = Ok(8);
+// let y: Result<i32, &str> = x.and_then(|v|get_value(v)).and_then(|v|multiply(v)); // y is Ok(16)
+
+// // let x: Result<i32, &str> = Ok(3);
+// // let y: Result<i32, &str> = x.and_then(|v|get_value(v)).and_then(|v|multiply(v)); // y 
+
+//     if let Ok(v)=y{
+//         println!("{}",v)
+//     }else{
+//         println!("Got an Error: {:?}",y.unwrap_err());
+//     }
+// }
+use std::num::ParseIntError;
+
+// FILL in the blank
+type Res<i32> = Result<i32,ParseIntError>;
+
+// Use the above alias to refer to our specific `Result` type.
+fn multiply(first_number_str: &str, second_number_str: &str) -> Res<i32> {
+    first_number_str.parse::<i32>().and_then(|first_number| {
+        second_number_str.parse::<i32>().map(|second_number| first_number * second_number)
+    })
 }
 
-fn multiply(x: i32) -> Result<i32, &'static str> {
-    Ok(x * 2)
+// Here, the alias again allows us to save some space.
+fn print(result: Res<i32>) {
+    match result {
+        Ok(n)  => println!("n is {}", n),
+        Err(e) => println!("Error: {}", e),
+    }
 }
 
 
 fn main() {
-    // // This still presents a reasonable answer.
-    // let twenty = multiply1("10", "2");
-    // print(twenty);
+    print(multiply("10", "2"));
+    print(multiply("t", "2"));
 
-    // // The following now provides a much more helpful error message.
-    // let tt = multiply("t", "2");
-    // print(tt);
-
-    // println!("Success!");
-    let x: Result<i32, &str> = Ok(9);
-let y: Result<i32, &str> = x.and_then(|v|get_value(v)).and_then(|v|multiply(v)); // y is Ok(16)
-
-// let x: Result<i32, &str> = Ok(3);
-// let y: Result<i32, &str> = x.and_then(|v|get_value(v)).and_then(|v|multiply(v)); // y 
-
-    if let Ok(v)=y{
-        println!("{}",v)
-    }else{
-        println!("Got an Error: {:?}",y.unwrap_err());
-    }
+    println!("Success!");
 }
