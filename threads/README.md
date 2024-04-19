@@ -1,0 +1,3 @@
+# Threads
+- In Rust, threads allow you to split the computation in your program into multiple threads, enabling concurrent execution of tasks. This can improve the performance of your code by utilizing multiple cores of a CPU.
+- To create a new thread in Rust, you use the thread::spawn() function from the std module. This function takes a closure as an argument, which contains the code to be executed in the new thread. Here's a simple example:
